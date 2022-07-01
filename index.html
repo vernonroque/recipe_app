@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Recipe App</title>
+    <link href="main.css" type="text/css" rel = "stylesheet"/>
+    <script src="https://kit.fontawesome.com/58b4bed871.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="recipe_header">
+        <label for = "recipe">All Recipes</label>
+        <input type = "text" id = "recipe" name = "recipe">
+        <button class = "search_button"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </header>
+    <div class="fav_container">
+        <h2>Favorite Meals</h2>
+        <ul class = "recipe_list">
+            <li class = "fav_item"><img src="https://www.themealdb.com/images/media/meals/wxywrq1468235067.jpg/preview"/><span>Tart</span></li>
+            <li class = "fav_item"><img src="https://www.themealdb.com/images/media/meals/xutquv1505330523.jpg/preview"/><span>Grilled Mac n' Cheese Sandwich</span></li>
+            <li class = "fav_item"><img src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg/preview"/><span>Spicy Arrabiata Penne</span></li>
+            <li class = "fav_item"><img src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg/preview"/><span>Spicy Arrabiata Penne</span></li>
+            <li class = "fav_item"><img src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg/preview"/><span>Spicy Arrabiata Penne</span></li>
+            <li class = "fav_item"><img src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg/preview"/><span>Spicy Arrabiata Penne</span></li>
+        </ul>
+    </div>
+    <div class = "random_container">
+        <h2>Random Meal of the Day</h2>
+        <div class = "random_meal" id = "random_meal">
+            <img class ="random_img" src = "https://www.themealdb.com/images/media/meals/1d85821576790598.jpg"/>
+        </div>
+        <div class = "random_text">
+            <p>(Recipe name goes here)</p>
+            <button class = "like_button"><i class="fa-regular fa-2x fa-heart"></i></button>
+
+        </div>
+    </div>
+    
+</body>
+<script src="index.js"></script>
+</html>
