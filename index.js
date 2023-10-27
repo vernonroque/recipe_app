@@ -1,3 +1,6 @@
+import getRandomRecipe, 
+{searchMealByName, getMealById} from './apis.js'; ///REMEMBER TO INCLUDE .JS AT THE END!!! OTHERWISE IT WON'T IMPORT CORRECTLY
+
 const randMealContainer = document.getElementById('random_main');
 const randMealFooter = document.getElementById('random_footer')
 const recipeList = document.getElementById('recipe_list');
@@ -6,15 +9,12 @@ const searchButton = document.getElementById('search_button');
 const searchedContainer = document.getElementById('searched_container');
 
 
-
-
-
 let toggle = false;
 //let searchToggle = false;
 let mealIds = ['52768','52829',"52771"];
 let searchExist = false;
 
-getRandomRecipe();
+renderRandomMeal();
 
 recipeList.querySelector(`#button52768`).addEventListener('click', () => {
     const mealId = '52768';
@@ -49,48 +49,6 @@ searchButton.addEventListener('click', async() => {
     searchExist = true;
 
 });
-
-
-
-
-//remember to add "https://" in front of api endpoints!!!!
-async function getRandomRecipe(){
-
-    const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
-    const jsonResponse = await response.json();
-
-    const randomMeal = jsonResponse.meals[0];
-
-    console.log(jsonResponse.meals[0]);
-
-    renderRandomMeal(randomMeal);
-
- }
-
- async function searchMealByName(name){
-
-    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=' + name);
-    const jsonResponse = await response.json();
-
-    const meals = jsonResponse.meals;
-
-    return meals;
-
- }
-
- async function getMealById(variable){
-    const response = await fetch('https://www.themealdb.com/api/json/v1/1/lookup.php?i=' + variable);
-    const jsonResponse = await response.json();
-    const meal = jsonResponse.meals[0];
-    const id = meal.idMeal;
-    const image = meal.strMealThumb;
-    const text = meal.strMeal;
-
-    addToFavorites(id,image,text);
-
- }
-
- 
 
  function getIngredients(meal){
 
@@ -134,8 +92,8 @@ function addToFavorites(mealId,mealImg,mealText,searchHeart){
 
     newItem.innerHTML = `
     <li class = "fav_item" id = "list${mealId}">
-    <button class ="remove_button"  id ="button${mealId}"><i class="fa-solid fa-1.5x fa-circle-xmark"></i></button>
-    <img src="${mealImg}/preview"/>
+    <button class = "remove_button"  id ="button${mealId}"><i class="fa-solid fa-1.5x fa-circle-xmark"></i></button>
+    <button class = "fav-recipe-button"><img class = "fav-img-item" src="${mealImg}/preview"/></button>
     <span>${mealText}</span></li>
     
     `
@@ -220,7 +178,9 @@ function renderSearchedContainer(arr){
 
 }
 
-function renderRandomMeal(meal){
+async function renderRandomMeal(){
+
+    const meal = await getRandomRecipe();
 
     const mealDiv = document.createElement('div'); //creates a div
     const mealFooter = document.createElement('div');
@@ -262,7 +222,7 @@ function renderRandomMeal(meal){
     mealDiv.querySelector("#refresh_button").addEventListener("click", () => {
         mealDiv.remove();
         mealFooter.remove();
-        getRandomRecipe();
+        renderRandomMeal();
         toggle = false;
 
     });
