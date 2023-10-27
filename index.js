@@ -7,6 +7,7 @@ const recipeList = document.getElementById('recipe_list');
 const searchTerm = document.getElementById('searched_recipe');
 const searchButton = document.getElementById('search_button');
 const searchedContainer = document.getElementById('searched_container');
+const favRecipeContainer = document.getElementById('fav-recipe-container');
 
 
 let toggle = false;
@@ -31,6 +32,77 @@ recipeList.querySelector(`#button52771`).addEventListener('click', () => {
     removeFromFavorites(mealId);
 });
 
+recipeList.querySelector("[id ='52768']").addEventListener('click',async()=>{
+
+    const mealID = document.getElementById("52768").id;
+    const meal = await getMealById(mealID);
+    //console.log("This is the meal >>>", meal);
+
+     const mealIng = getIngredients(meal);
+     console.log("the meal ingredients>>>>",mealIng);
+
+     const mealInstructions = getRecipeInstructions(meal);
+    
+    const image = meal.strMealThumb;
+   
+    const text = meal.strMeal;
+    const id = meal.idMeal;
+
+    ///this section creates the ingredients container within the fav-recipe-container
+    const ingredientContainer = document.createElement('div');
+    ingredientContainer.classList.add('ingredients');
+
+    ingredientContainer.innerHTML = 
+    `
+    <h1>${text}</h1>
+    <img src = "${image}"/>
+    <ul class= "ingredient_list" id = "ingredient_list" > 
+
+    </ul>
+    <p class = "recipe_instructions" id = "recipe_instructions">${mealInstructions}</p>
+    `
+    favRecipeContainer.appendChild(ingredientContainer);
+    /////**** */
+
+
+    ///this adds the list of ingredients
+    const ingredientList = document.querySelector('#ingredient_list');
+    for(let i = 0; i< mealIng.length;i++){
+        let recipeIng = document.createElement('li');
+        recipeIng.classList.add('ingredient_item');
+        recipeIng.textContent = mealIng[i];
+
+        // console.log('recipe_ingredient', recipeIng);
+
+        ingredientList.appendChild(recipeIng);
+    }
+
+   
+    // const mealIng = getIngredients(meal);
+    //     const mealInstructions = getRecipeInstructions(meal);
+    //     const ingredientContainer = document.createElement('div');
+    //     ingredientContainer.classList.add('ingredients_container');
+    //     const likeButton = document.getElementById('like_button');
+    //     const heart = likeButton.querySelector("i");
+
+        
+
+    //     ingredientContainer.innerHTML = `
+    //     <h2 class = "rand_title">Random Meal of the Day</h2> 
+    //     <button class = "refresh_button" id = "refresh_button">Refresh</button>
+    //     <button class = "recipe_button" id = "recipe_button"><img class= "random_img" src = "${image}"/></button>
+    //     <h2 class = "ingredients_title">Ingredients:</h2>
+    //     <ul class= "ingredient_list" id = "ingredient_list" > 
+
+    //     </ul>
+    //     <p class = "recipe_instructions" id = "recipe_instructions">${mealInstructions}</p>
+
+    //     `
+        
+});
+
+
+
 searchButton.addEventListener('click', async() => {
     const term = searchTerm.value;
     console.log(term);
@@ -49,6 +121,10 @@ searchButton.addEventListener('click', async() => {
     searchExist = true;
 
 });
+
+function renderFavoriteRecipe(id){
+
+}
 
  function getIngredients(meal){
 
@@ -91,7 +167,7 @@ function addToFavorites(mealId,mealImg,mealText,searchHeart){
     
 
     newItem.innerHTML = `
-    <li class = "fav_item" id = "list${mealId}">
+    <li class = "fav_item" id = "${mealId}">
     <button class = "remove_button"  id ="button${mealId}"><i class="fa-solid fa-1.5x fa-circle-xmark"></i></button>
     <button class = "fav-recipe-button"><img class = "fav-img-item" src="${mealImg}/preview"/></button>
     <span>${mealText}</span></li>
@@ -228,7 +304,7 @@ async function renderRandomMeal(){
     });
     
 
-    mealDiv.querySelector('#recipe_button').addEventListener("click", () => {
+    mealDiv.querySelector('.recipe_button').addEventListener("click", () => {
 
         console.log('toggle value', toggle);
     

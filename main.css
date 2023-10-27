@@ -1,3 +1,6 @@
+*{
+    box-sizing:border-box;
+}
 body{
     background:#F5ECFF;
 }
@@ -21,6 +24,13 @@ body{
     align-items: center;
     background:white;
     margin: 2rem 0;
+}
+.fav-recipe-button{
+    background:transparent;
+    border:none;
+}
+.fav-recipe-button:hover{
+    cursor:pointer;
 }
 .recipe_list{
     display:flex;

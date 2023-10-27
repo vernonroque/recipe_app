@@ -26,10 +26,9 @@ export default async function getRandomRecipe(){
     const response = await fetch('https://www.themealdb.com/api/json/v1/1/lookup.php?i=' + variable);
     const jsonResponse = await response.json();
     const meal = jsonResponse.meals[0];
-    const id = meal.idMeal;
-    const image = meal.strMealThumb;
-    const text = meal.strMeal;
+   //  const id = meal.idMeal;
+   //  const image = meal.strMealThumb;
+   //  const text = meal.strMeal;
 
-    addToFavorites(id,image,text);
-
+   return meal;
  }
