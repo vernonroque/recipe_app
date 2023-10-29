@@ -5,6 +5,7 @@ const randMealContainer = document.getElementById('random_main');
 const randMealFooter = document.getElementById('random_footer')
 const recipeList = document.getElementById('recipe_list');
 const searchTerm = document.getElementById('searched_recipe');
+const searchForm = document.getElementById('search_form');
 const searchButton = document.getElementById('search_button');
 const searchedContainer = document.getElementById('searched_container');
 const favRecipeContainer = document.getElementById('fav-recipe-container');
@@ -35,6 +36,7 @@ recipeList.addEventListener("click", async function(event){
    
        ingredientContainer.innerHTML = 
        `
+       <button class="remove_button" id ="remove-button-favorites"><i class="fa-solid fa-3x fa-circle-xmark"></i></button>
        <h1>${text}</h1>
        <img src = "${image}"/>
        <ul class= "ingredient_list" id = "ingredient_list" > 
@@ -52,6 +54,12 @@ recipeList.addEventListener("click", async function(event){
             if(existingIngredientContainer){
                 favRecipeContainer.replaceChild(ingredientContainer,existingIngredientContainer);
                 }
+
+        ///This will remove ingredientContainer when user clicks the 'x'        
+        const removeButton = favRecipeContainer.querySelector('.remove_button');
+        removeButton.addEventListener("click", ()=>{
+            favRecipeContainer.removeChild(ingredientContainer);
+        })
             
        /////**** */
    
@@ -85,6 +93,25 @@ recipeList.querySelector(`#button52771`).addEventListener('click', () => {
     removeFromFavorites(mealId);
 });
 
+searchForm.addEventListener("submit", async function(event){
+    event.preventDefault();
+
+    const term = searchTerm.value;
+    console.log(term);
+
+
+    const termSearchedArr = await searchMealByName(term);
+
+    console.log('term searched',termSearchedArr);
+
+    if(searchExist){
+        searchedContainer.replaceChildren();
+        console.log('search container cleared');
+    }
+
+    renderSearchedContainer(termSearchedArr);
+    searchExist = true;
+})
 
 searchButton.addEventListener('click', async() => {
     const term = searchTerm.value;
@@ -150,7 +177,7 @@ function addToFavorites(mealId,mealImg,mealText,searchHeart){
     
 
     newItem.innerHTML = `
-    <li class = "fav_item" id = "${mealId}">
+    <li class = "fav_item" id = "list${mealId}">
     <button class = "remove_button"  id ="button${mealId}"><i class="fa-solid fa-1.5x fa-circle-xmark"></i></button>
     <button class = "fav-recipe-button"><img class = "fav-img-item" id = "${mealId}" src="${mealImg}/preview"/></button>
     <span>${mealText}</span></li>
@@ -342,3 +369,20 @@ async function renderRandomMeal(){
 }
 
 
+//for onchange function
+// function clearEntry() {
+//     console.log("Time is up. Entry cleared");
+//     setEntry('');
+// }
+
+// // Function to reset the timer
+// function resetTimer() {
+//     clearTimeout(timerId); // Clear the previous timer
+//     timerId = setTimeout(clearEntry, 3000); // Set a new timer
+// }
+
+//  // Initially set the timer
+//  resetTimer();
+
+// // Event handler for the search input box
+// document.querySelector('.search').addEventListener('input', resetTimer);
