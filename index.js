@@ -32,7 +32,7 @@ recipeList.addEventListener("click", async function(event){
    
        ///this section creates the ingredients container within the fav-recipe-container
        const ingredientContainer = document.createElement('div');
-       ingredientContainer.classList.add('ingredients');
+       ingredientContainer.classList.add('favIngredientsContainer');
    
        ingredientContainer.innerHTML = 
        `
@@ -46,7 +46,7 @@ recipeList.addEventListener("click", async function(event){
 
        `
        favRecipeContainer.appendChild(ingredientContainer);
-       const existingIngredientContainer = favRecipeContainer.querySelector('.ingredients');
+       const existingIngredientContainer = favRecipeContainer.querySelector('.favIngredientsContainer');
     
        console.log("the new recipe >>>", ingredientContainer);
        console.log("the existing recipe shown>>>>",existingIngredientContainer);
@@ -99,7 +99,6 @@ searchForm.addEventListener("submit", async function(event){
     const term = searchTerm.value;
     console.log(term);
 
-
     const termSearchedArr = await searchMealByName(term);
 
     console.log('term searched',termSearchedArr);
@@ -111,12 +110,50 @@ searchForm.addEventListener("submit", async function(event){
 
     renderSearchedContainer(termSearchedArr);
     searchExist = true;
-})
 
-searchButton.addEventListener('click', async() => {
+    searchTerm.value = '';
+});
+
+searchForm.addEventListener('input', async(event) => {
+
+    // event.preventDefault();
+
+    let timerId;
+    function clearEntry() {
+        console.log("Time is up. Entry cleared");
+        searchTerm.value = '';
+    }
+
+ // Function to reset the timer
+    function resetTimer() {
+        clearTimeout(timerId); // Clear the previous timer
+        timerId = setTimeout(clearEntry, 3000); // Set a new timer
+    }
+
+  // Initially set the timer
+    resetTimer();
+
     const term = searchTerm.value;
     console.log(term);
 
+    const termSearchedArr = await searchMealByName(term);
+
+    console.log('term searched',termSearchedArr);
+
+    if(searchExist){
+        searchedContainer.replaceChildren();
+        console.log('search container cleared');
+    }
+
+    renderSearchedContainer(termSearchedArr);
+    searchExist = true;
+
+});
+
+searchButton.addEventListener('click', async() => {
+
+    const term = searchTerm.value;
+    console.log(term);
 
     const termSearchedArr = await searchMealByName(term);
 
@@ -129,6 +166,8 @@ searchButton.addEventListener('click', async() => {
 
     renderSearchedContainer(termSearchedArr);
     searchExist = true;
+
+    searchTerm.value = '';
 
 });
 
@@ -367,22 +406,3 @@ async function renderRandomMeal(){
 
 
 }
-
-
-//for onchange function
-// function clearEntry() {
-//     console.log("Time is up. Entry cleared");
-//     setEntry('');
-// }
-
-// // Function to reset the timer
-// function resetTimer() {
-//     clearTimeout(timerId); // Clear the previous timer
-//     timerId = setTimeout(clearEntry, 3000); // Set a new timer
-// }
-
-//  // Initially set the timer
-//  resetTimer();
-
-// // Event handler for the search input box
-// document.querySelector('.search').addEventListener('input', resetTimer);

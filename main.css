@@ -25,6 +25,16 @@ body{
     background:white;
     margin: 2rem 0;
 }
+.favIngredientsContainer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+.favIngredientsContainer .remove_button{
+    margin-top:10px;
+    margin-left:700px;
+}
 .fav-recipe-button{
     background:transparent;
     border:none;
@@ -191,11 +201,12 @@ body{
     padding:0 1rem;
 }
 .remove_button{
-    border:2px solid red;
-   align-items:flex-end;
+    align-items:flex-end;
     background:none;
     border:none;
-
+}
+.remove_button:hover{
+    cursor:pointer;
 }
 
 i{
