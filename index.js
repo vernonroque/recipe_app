@@ -9,7 +9,7 @@ const searchForm = document.getElementById('search_form');
 const searchButton = document.getElementById('search_button');
 const searchedContainer = document.getElementById('searched_container');
 const favRecipeContainer = document.getElementById('fav-recipe-container');
-
+const searchedRecipeContainer = document.getElementById('searched-recipe-container');
 
 let toggle = false;
 //let searchToggle = false;
@@ -21,7 +21,7 @@ renderRandomMeal();
 recipeList.addEventListener("click", async function(event){
 
     if(event.target.tagName === "IMG"){
-
+        console.log('this is the event target', event.target);
         const mealID = event.target.id;
         const meal = await getMealById(mealID);
         const mealIng = getIngredients(meal);
@@ -114,7 +114,7 @@ searchForm.addEventListener("submit", async function(event){
     searchTerm.value = '';
 });
 
-searchForm.addEventListener('input', async(event) => {
+searchForm.addEventListener('input', async() => {
 
     // event.preventDefault();
 
@@ -170,10 +170,6 @@ searchButton.addEventListener('click', async() => {
     searchTerm.value = '';
 
 });
-
-function renderFavoriteRecipe(id){
-
-}
 
  function getIngredients(meal){
 
@@ -249,8 +245,6 @@ function renderSearchedContainer(arr){
     console.log("The searchedArr", searchedArr);
     const searchResultsCont = document.createElement('div');
     
-   //const newSearchedContainer = document.getElementById('searched_container');
-   
    searchResultsCont.classList.add('search_container_results');
 
     searchResultsCont.innerHTML = `
@@ -259,23 +253,21 @@ function renderSearchedContainer(arr){
 
     </ul>
     `
-
     searchedContainer.appendChild(searchResultsCont);
   
         const searchList = document.getElementById('search_list');
 
         searchedArr.map(element =>{
 
-        const searchItem = document.createElement('li');
-        searchItem.innerHTML = `
-        <li class = "search_item" id = "list${element.idMeal}">
-        <img src="${element.strMealThumb}/preview"/>
-        <span>${element.strMeal}</span>
-        <button class = "like_button_search" id = "search${element.idMeal}" ><i id="heart" class="fa-solid fa-3x fa-heart"></i></button>
-        </li>
-        `
-
-       return searchList.appendChild(searchItem);
+            const searchItem = document.createElement('li');
+            searchItem.innerHTML = `
+            <li class = "search_item" id = "list${element.idMeal}">
+            <button class = "searched-recipe-button" ><img id = "${element.idMeal}" src="${element.strMealThumb}/preview"/></button>
+            <span>${element.strMeal}</span>
+            <button class = "like_button_search" id = "search${element.idMeal}" ><i id="heart" class="fa-solid fa-3x fa-heart"></i></button>
+            </li>
+            `
+            return searchList.appendChild(searchItem); 
     });
 
     searchExist = true;
@@ -290,16 +282,33 @@ function renderSearchedContainer(arr){
             const searchHeart = likeButton.querySelector("i");
             searchHeart.classList.add('liked_color');
 
-
             if(!searchToggle){
                 addToFavorites(element.idMeal,element.strMealThumb,element.strMeal,searchHeart);
                 searchToggle = true;
             }
-            
-            
         });
-
     });
+
+     ///here is where the ingredients for the search container will go
+        searchList.addEventListener("click", (event)=> {
+        if(event.target.tagName === "IMG"){
+            const mealId = event.target.id;
+            console.log("Button in search is clicked");
+            console.log("meal ID for this item is >>>", mealId);
+
+            const searchRecipeDetails = document.createElement('div');
+            searchRecipeDetails.classList.add('search-recipe-details');
+    
+            searchRecipeDetails.innerHTML = `
+                <h1>Hello World</h1>
+            `
+        
+            searchResultsCont.appendChild(searchRecipeDetails);
+        }
+     })
+     
+
+
 
 }
 
