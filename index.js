@@ -93,6 +93,7 @@ recipeList.querySelector(`#button52771`).addEventListener('click', () => {
     removeFromFavorites(mealId);
 });
 
+//event listener when the user hits enter after writing something in the search input
 searchForm.addEventListener("submit", async function(event){
     event.preventDefault();
 
@@ -114,6 +115,7 @@ searchForm.addEventListener("submit", async function(event){
     searchTerm.value = '';
 });
 
+//event listener when the user starts writing something in the search input
 searchForm.addEventListener('input', async() => {
 
     // event.preventDefault();
@@ -150,6 +152,7 @@ searchForm.addEventListener('input', async() => {
 
 });
 
+//event listener when the user clicks the search button
 searchButton.addEventListener('click', async() => {
 
     const term = searchTerm.value;
@@ -203,7 +206,7 @@ function removeFromFavorites(mealId){
     //console.log('meals array',mealIds);
 
 }
-
+///this section adds a recipe into the favorites section container
 function addToFavorites(mealId,mealImg,mealText,searchHeart){
     const currentList = document.getElementById('recipe_list');
     const newItem = document.createElement('li');
@@ -239,6 +242,7 @@ function addToFavorites(mealId,mealImg,mealText,searchHeart){
 
 }
 
+///Code below renders the search results when user finishes inputting search query
 function renderSearchedContainer(arr){
 
     const searchedArr = arr;
@@ -290,28 +294,56 @@ function renderSearchedContainer(arr){
     });
 
      ///here is where the ingredients for the search container will go
-        searchList.addEventListener("click", (event)=> {
+        searchList.addEventListener("click", async(event)=> {
         if(event.target.tagName === "IMG"){
-            const mealId = event.target.id;
             console.log("Button in search is clicked");
-            console.log("meal ID for this item is >>>", mealId);
+            console.log("meal ID for this item is >>>", event.target.id);
+            const mealID = event.target.id;
+            const meal = await getMealById(mealID);
+            const mealIng = getIngredients(meal);
+            const mealInstructions = getRecipeInstructions(meal);
+            const image = meal.strMealThumb;
+            const text = meal.strMeal;
 
             const searchRecipeDetails = document.createElement('div');
             searchRecipeDetails.classList.add('search-recipe-details');
     
             searchRecipeDetails.innerHTML = `
-                <h1>Hello World</h1>
-            `
+            <button class="remove_button" id ="remove-button-favorites"><i class="fa-solid fa-3x fa-circle-xmark"></i></button>
+            <h1>${text}</h1>
+            <img src = "${image}"/>
+            <ul class= "ingredient_list" id = "ingredient_list_inSearch" > 
         
+            </ul>
+            <p class = "recipe_instructions" id = "recipe_instructions">${mealInstructions}</p>
+     
+            `
             searchResultsCont.appendChild(searchRecipeDetails);
+
+            const existingSearchRecipeDetails = searchResultsCont.querySelector('.search-recipe-details');
+            console.log("The existing search recipe>>>", existingSearchRecipeDetails);
+
+            searchResultsCont.replaceChild(searchRecipeDetails,existingSearchRecipeDetails);
+
+             ///This will remove ingredientContainer when user clicks the 'x'        
+            const removeButton = searchResultsCont.querySelector('.remove_button');
+             removeButton.addEventListener("click", ()=>{
+                searchResultsCont.removeChild(searchRecipeDetails);
+            })
+            /////**** */
+            const ingredientList = document.querySelector('#ingredient_list_inSearch');
+            for(let i = 0; i< mealIng.length;i++){
+                let recipeIng = document.createElement('li');
+                recipeIng.classList.add('ingredient_item');
+                recipeIng.textContent = mealIng[i];
+        
+                ingredientList.appendChild(recipeIng);
+            }
         }
      })
      
-
-
-
 }
-
+////This is the random recipe of the day
 async function renderRandomMeal(){
 
     const meal = await getRandomRecipe();
@@ -350,8 +382,6 @@ async function renderRandomMeal(){
         }
        
     } );
-
-
 
     mealDiv.querySelector("#refresh_button").addEventListener("click", () => {
         mealDiv.remove();
