@@ -25,15 +25,44 @@ body{
     background:white;
     margin: 2rem 0;
 }
+.fav-recipe-container{
+    width:100%;
+}
 .favIngredientsContainer{
     display:flex;
+    /* position:relative; */
     justify-content:center;
     align-items:center;
     flex-direction:column;
+    max-width:100%;
+}
+.fav-ing-header{
+    display:flex;
+    justify-content:flex-end;
+    align-items:flex-start;
+    /* border:2px solid red; */
+    width:50%;
+    margin-bottom:10px;
+}
+.mealName{
+    text-align:center;
+    margin: 0 auto;
+    padding-left:50px;
 }
 .favIngredientsContainer .remove_button{
-    margin-top:10px;
-    margin-left:700px;
+    position:relative;
+    /* border:2px solid blue; */
+    padding: 0; /* Remove extra padding that might affect positioning */
+    
+}
+.favIngredientsContainer .remove_button #fav-remove-button  {
+    position:sticky;
+    /* border:2px solid orange; */
+    top: 0; /* Position the icon at the top of the button */
+    right: 0; /* Position the icon at the right side of the button */
+    z-index: 10;
+    color: darkblue;
+    margin: 0;
 }
 .fav-recipe-button{
     background:transparent;
@@ -97,7 +126,6 @@ body{
     border:none;
    
 }
-
 .search_container_results{
     height:auto;
     width:100%;
@@ -109,7 +137,6 @@ body{
     background:white;
     border-radius:15px;
     box-shadow: 0 5px 5px rgba(57, 63, 72, 0.3);
-
 }
 .search_list{
     display:flex;
@@ -130,12 +157,44 @@ body{
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    border: 2px solid red;
+    /* border: 2px solid red; */
 }
-.search-recipe-details .remove_button{
-    margin-top:10px;
-    margin-left:700px;
+.searched-recipe-button{
+    border:none;
+    background:transparent;
 }
+.searched-recipe-button:hover{
+    cursor:pointer;
+}
+.search-recipe-details .remove-button{
+    position:relative;
+    /* border:2px solid pink; */
+    padding: 0; /* Remove extra padding that might affect positioning */
+}
+.search-recipe-details .remove_button #sea-remove-button  {
+    position:sticky;
+    /* border:2px solid orange; */
+    top: 0; /* Position the icon at the top of the button */
+    right: 0; /* Position the icon at the right side of the button */
+    z-index: 10;
+    color: darkblue;
+    margin: 0;
+}
+
+.search-ing-header{
+    display:flex;
+    justify-content:flex-end;
+    align-items:flex-start;
+    /* border:2px solid red; */
+    width:50%;
+    margin-bottom:10px;
+}
+.mealName{
+    text-align:center;
+    margin: 0 auto;
+    padding-left:50px;
+}
+
 .random_container{
     height:auto;
     width:100%;
@@ -219,19 +278,25 @@ body{
 .remove_button:hover{
     cursor:pointer;
 }
-
 i{
     color:rgb(208, 208, 208);
 }
-
 .fa-circle-xmark{
     z-index:10;
     color:darkblue;
     position:absolute;
     margin-left:50px;
-    
 }
-
 .liked_color{
     color:purple;
 }
+
+/* @media only screen and (max-width:780px){
+    .fav-ing-header{
+        width:680px;
+    }
+    .mealName{
+      font-size:30px;
+    }
+   
+} */

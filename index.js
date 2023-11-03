@@ -9,7 +9,7 @@ const searchForm = document.getElementById('search_form');
 const searchButton = document.getElementById('search_button');
 const searchedContainer = document.getElementById('searched_container');
 const favRecipeContainer = document.getElementById('fav-recipe-container');
-const searchedRecipeContainer = document.getElementById('searched-recipe-container');
+//const searchedRecipeContainer = document.getElementById('searched-recipe-container');
 
 let toggle = false;
 //let searchToggle = false;
@@ -36,9 +36,13 @@ recipeList.addEventListener("click", async function(event){
    
        ingredientContainer.innerHTML = 
        `
-       <button class="remove_button" id ="remove-button-favorites"><i class="fa-solid fa-3x fa-circle-xmark"></i></button>
-       <h1>${text}</h1>
-       <img src = "${image}"/>
+            <div class = "fav-ing-header">
+            <h1 class="mealName">${text}</h1>
+                <button class="remove_button" id ="remove-button-favorites"><i class="fa-solid fa-3x fa-circle-xmark" id ="fav-remove-button"></i></button>
+            </div>
+           
+       <img class= "random_img" src = "${image}"/>
+      
        <ul class= "ingredient_list" id = "ingredient_list" > 
    
        </ul>
@@ -309,9 +313,11 @@ function renderSearchedContainer(arr){
             searchRecipeDetails.classList.add('search-recipe-details');
     
             searchRecipeDetails.innerHTML = `
-            <button class="remove_button" id ="remove-button-favorites"><i class="fa-solid fa-3x fa-circle-xmark"></i></button>
-            <h1>${text}</h1>
-            <img src = "${image}"/>
+            <div class ="search-ing-header">
+            <h1 class ="mealName">${text}</h1>
+            <button class="remove_button"><i class="fa-solid fa-3x fa-circle-xmark" id ="sea-remove-button"></i></button>
+            </div>
+            <img class= "random_img" src = "${image}"/>
             <ul class= "ingredient_list" id = "ingredient_list_inSearch" > 
         
             </ul>
